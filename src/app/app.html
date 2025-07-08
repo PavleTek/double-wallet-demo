@@ -1,0 +1,357 @@
+<h1 class="text-center mt-4">Double Wallet</h1>
+<p-toast></p-toast>
+
+<div class="flex flex-column align-items-center mt-3 w-min">
+  <div class="flex justify-content-center align-items-start gap-5">
+    <div class="flex flex-column align-items-center">
+      <h2>
+        <i class="pi pi-bitcoin mr-2" style="font-size: 1.75rem"></i>Bitcoin
+      </h2>
+      <div class="border-round-md border-2 p-3 pt-1 w-32rem">
+        <div class="flex flex-column align-items-center">
+          <div
+            style="width: 100%; word-break: break-all; white-space: normal"
+            class="mt-3"
+          >
+            <p-button
+              class="mt-2"
+              [label]="bitcoinAddress"
+              styleClass="w-max"
+              (onClick)="copyToClipboard(bitcoinAddress, 'Bitcoin')"
+              pTooltip="Copy Bitcoin Address"
+              tooltipPosition="top"
+            />
+          </div>
+          <div
+            class="mt-2 flex align-items-center justify-content-center gap-2 w-full"
+          >
+            <strong>Balance: {{ bitcoinBalance }}</strong>
+            <p-button
+              icon="pi pi-refresh"
+              styleClass="p-button-text"
+              (onClick)="fetchBitcoinBalance()"
+              pTooltip="Reload Balance"
+              tooltipPosition="top"
+            />
+          </div>
+          <div
+            class="mt-2 flex align-items-center justify-content-center w-full"
+          ></div>
+          <div class="w-full mt-3">
+            <div
+              class="flex flex-column align-items-center border-1 border-round-md border-300 p-3"
+            >
+              <h4>Send Bitcoin</h4>
+              <div class="flex flex-column align-items-center w-full mb-2">
+                <label class="pr-2 pt-2 text-center" style="width: 100%"
+                  >Recipient Address:</label
+                >
+                <input
+                  type="text"
+                  pInputText
+                  [(ngModel)]="bitcoinRecipient"
+                  [style]="{ width: '100%' }"
+                />
+              </div>
+              <div class="flex flex-column align-items-center w-full mb-2">
+                <label class="pr-2 pt-2 text-center" style="width: 100%"
+                  >Amount:</label
+                >
+                <p-inputnumber
+                  [(ngModel)]="bitcoinAmount"
+                  inputId="btc-send-amount"
+                  mode="decimal"
+                  [min]="0"
+                  [minFractionDigits]="8"
+                  [maxFractionDigits]="8"
+                  [step]="0.00002"
+                  [style]="{ width: '100%' }"
+                />
+              </div>
+              <div class="flex flex-column align-items-center w-full mb-2">
+                <label class="pt-2 text-center" style="width: 100%"
+                  >Bitcoin Fee:</label
+                >
+                <div
+                  class="flex justify-content-center align-items-center gap-2"
+                  style="width: 100%; font-size: 1.1rem"
+                >
+                  <p-inputnumber
+                    [(ngModel)]="sendBitcoinFee"
+                    inputId="btc-fee"
+                    mode="decimal"
+                    [min]="1"
+                    [max]="1000"
+                    suffix=" satoshi"
+                    [style]="{ width: '100%' }"
+                  />
+                  <i
+                    class="pi pi-info-circle"
+                    pTooltip="This fee is only necessary for Bitcoin Transactions, a minimum of 210 is recommended"
+                    tooltipPosition="top"
+                    style="font-size: 1.3rem; cursor: pointer"
+                  ></i>
+                </div>
+              </div>
+              <div class="flex justify-content-center gap-3 mt-2 w-full">
+                <p-button
+                  label="Send Bitcoin"
+                  icon="pi pi-arrow-right"
+                  iconPos="right"
+                  (onClick)="sendBitcoin()"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-column align-items-center">
+      <h2>
+        <i class="pi pi-ethereum mr-2" style="font-size: 1.75rem"></i>Ethereum
+      </h2>
+      <div class="border-round-md border-2 p-3 pt-1 w-32rem">
+        <div class="flex flex-column align-items-center">
+          <div
+            style="width: 100%; word-break: break-all; white-space: normal"
+            class="mt-3"
+          >
+            <p-button
+              class="mt-2"
+              [label]="ethereumAddress"
+              styleClass="w-max"
+              (onClick)="copyToClipboard(ethereumAddress, 'Ethereum')"
+              pTooltip="Copy Ethereum Address"
+              tooltipPosition="top"
+            />
+          </div>
+          <div
+            class="mt-2 flex align-items-center justify-content-center gap-2 w-full"
+          >
+            <strong>Balance: {{ ethereumBalance }}</strong>
+            <p-button
+              icon="pi pi-refresh"
+              styleClass="p-button-text"
+              (onClick)="fetchEthereumBalance()"
+              pTooltip="Reload Balance"
+              tooltipPosition="top"
+            />
+          </div>
+          <div
+            class="mt-2 flex align-items-center justify-content-center w-full"
+          ></div>
+          <div class="w-full mt-3">
+            <div
+              class="flex flex-column align-items-center border-1 border-round-md border-300 p-3"
+            >
+              <h4>Send Ethereum</h4>
+              <div class="flex flex-column align-items-center w-full mb-2">
+                <label class="pr-2 pt-2 text-center" style="width: 100%"
+                  >Recipient Address:</label
+                >
+                <input
+                  type="text"
+                  pInputText
+                  [(ngModel)]="ethereumRecipient"
+                  [style]="{ width: '100%' }"
+                />
+              </div>
+              <div class="flex flex-column align-items-center w-full mb-2">
+                <label class="pr-2 pt-2 text-center" style="width: 100%"
+                  >Amount:</label
+                >
+                <p-inputnumber
+                  [(ngModel)]="ethereumAmount"
+                  inputId="eth-send-amount"
+                  mode="decimal"
+                  [min]="0"
+                  [minFractionDigits]="8"
+                  [maxFractionDigits]="8"
+                  [step]="0.00002"
+                  [style]="{ width: '100%' }"
+                />
+              </div>
+              <div class="flex flex-column align-items-center w-full mb-2">
+                <label class="pt-2 text-center" style="width: 100%"
+                  >Gas Limit:</label
+                >
+                <div
+                  class="flex justify-content-center align-items-center gap-2"
+                  style="width: 100%; font-size: 1.1rem"
+                >
+                  <p-inputnumber
+                    [(ngModel)]="gasLimit"
+                    inputId="eth-gas-limit"
+                    mode="decimal"
+                    [min]="21000"
+                    [max]="10000000"
+                    suffix=" gas"
+                    [style]="{ width: '100%' }"
+                  />
+                  <i
+                    class="pi pi-info-circle"
+                    pTooltip="Gas limit for Ethereum transactions. Default is 21000 for a simple transfer."
+                    tooltipPosition="top"
+                    style="font-size: 1.3rem; cursor: pointer"
+                  ></i>
+                </div>
+              </div>
+              <div class="flex flex-column align-items-center w-full mb-2">
+                <label class="pt-2 text-center" style="width: 100%"
+                  >Gas Price:</label
+                >
+                <div
+                  class="flex justify-content-center align-items-center gap-2"
+                  style="width: 100%; font-size: 1.1rem"
+                >
+                  <p-inputnumber
+                    [(ngModel)]="gasPrice"
+                    inputId="eth-gas-price"
+                    mode="decimal"
+                    [min]="1"
+                    [max]="1000"
+                    suffix=" Gwei"
+                    [style]="{ width: '100%' }"
+                  />
+                  <i
+                    class="pi pi-info-circle"
+                    pTooltip="Gas price for Ethereum transactions in Gwei. Default is 20."
+                    tooltipPosition="top"
+                    style="font-size: 1.3rem; cursor: pointer"
+                  ></i>
+                </div>
+              </div>
+              <div class="flex flex-column align-items-center w-full mb-2">
+                <label class="pt-2 text-center" style="width: 100%"
+                  >Recommended Gas Price:</label
+                >
+                <div
+                  class="flex justify-content-center align-items-center gap-2"
+                  style="width: 100%; font-size: 1.1rem"
+                >
+                  <span class="text-lg font-semibold">
+                    {{
+                      isLoadingGasPrice
+                        ? "Loading..."
+                        : recommendedGasPrice > 0
+                        ? recommendedGasPrice.toFixed(2) + " Gwei"
+                        : "Not available"
+                    }}
+                  </span>
+                  <p-button
+                    icon="pi pi-refresh"
+                    styleClass="p-button-text"
+                    [disabled]="isLoadingGasPrice"
+                    (onClick)="fetchRecommendedGasPrice()"
+                    pTooltip="Refresh Recommended Gas Price"
+                    tooltipPosition="top"
+                  />
+                </div>
+              </div>
+              <div class="flex justify-content-center gap-3 mt-2 w-full">
+                <p-button
+                  label="Send Ethereum"
+                  icon="pi pi-arrow-right"
+                  iconPos="right"
+                  (onClick)="sendEthereum()"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-full text-center">
+  <p>{{ statusMessage }}</p>
+</div>
+
+<!-- Config Editor Section -->
+<div class="flex justify-content-end mt-4">
+  <p-button
+    icon="pi pi-cog"
+    label="Settings"
+    (onClick)="toggleNetworkSettings()"
+    styleClass="p-button-text"
+  />
+</div>
+<div
+  *ngIf="showNetworkSettings"
+  class="border-round-md border-2 p-3 mt-2"
+  #settingsSection
+>
+  <h2>Settings</h2>
+  <div class="flex flex-column gap-2 mt-1">
+    <h3 class="py-1 my-0">Bitcoin</h3>
+    <label>API Base URL:</label>
+    <input
+      pInputText
+      type="text"
+      [(ngModel)]="configDraft[selectedNetwork].bitcoin.apiBase"
+    />
+    <label>Default Bitcoin Fee:</label>
+    <p-inputNumber
+      [(ngModel)]="configDraft.bitcoinFee"
+      mode="decimal"
+      inputId="btc-fee-settings"
+      [style]="{ width: '200px' }"
+      suffix=" satoshi"
+    />
+  </div>
+  <p-divider />
+  <div class="flex flex-column gap-2 mt-2">
+    <h3 class="py-1 my-0">Ethereum</h3>
+    <label>RPC URL:</label>
+    <input
+      pInputText
+      type="text"
+      [(ngModel)]="configDraft[selectedNetwork].ethereum.rpcUrl"
+    />
+    <label>Network Name:</label>
+    <input
+      pInputText
+      type="text"
+      [(ngModel)]="configDraft[selectedNetwork].ethereum.network"
+    />
+    <label>Default Gas Limit:</label>
+    <p-inputNumber
+      [(ngModel)]="defaultGasLimit"
+      mode="decimal"
+      inputId="eth-gas-limit-settings"
+      [min]="21000"
+      [max]="10000000"
+      [style]="{ width: '200px' }"
+      suffix=" gas"
+    />
+    <label>Default Gas Price:</label>
+    <p-inputNumber
+      [(ngModel)]="defaultGasPrice"
+      mode="decimal"
+      inputId="eth-gas-price-settings"
+      [min]="1"
+      [max]="1000"
+      [style]="{ width: '200px' }"
+      suffix=" Gwei"
+    />
+  </div>
+  <p-divider />
+  <div class="flex flex-column gap-2 mt-2">
+    <h3 class="py-1 my-0">Network</h3>
+    <p-dropdown
+      [options]="networkOptions"
+      [(ngModel)]="pendingNetwork"
+      (onChange)="onNetworkDropdownChange($event)"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Select Network"
+      [style]="{ width: '200px' }"
+    ></p-dropdown>
+  </div>
+  <div class="flex justify-content-end mt-3">
+    <p-button label="Save Settings" (onClick)="saveConfig()" />
+  </div>
+</div>
+
+<p-confirmDialog></p-confirmDialog>
