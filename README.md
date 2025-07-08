@@ -1,59 +1,47 @@
-# FrontEnd
+# Double Wallet
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.4.
+This project is a simpel double wallet, that serves for both Bitcoin and Ethereum.
 
-## Development server
-
-To start a local development server, run:
-
+## Install and run
+You can clone the repository from github git@github.com:PavleTek/double-wallet-demo.git
+To run the app locally you need to run the following commands command:
 ```bash
-ng serve
+npm install
+npm run electron
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## Package Electron and use wallet in a usb stick
+You can package the electorn app and paste the folder inside of a usb stick
+This will allow you to use the same wallet on different computers
+It is important to notice that the wallet has no password, and no security features.
+A computer could instantly copy all the info from the usb stick and have access to your wallet
+You can use this wallet as you wish, but it is not recommended. it was made purely for educational purposes
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+to package the app run:
 ```bash
-ng generate component component-name
+npm build-electron
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+This will create a folder called "release-build" with another folder called "DoubleWallet-win32-x64"
+Copy and paste this to any usb stick.
+after pasting in the usb stick, inside of the drive, you can open the folder and click on the
+"DoubleWallet.exe" file. which will launch the app.
+Once the app is launched it will create the wallets for bitcoin and ethereum inside of the
+"resources" folder. these will contain your private key and address. deleting this will imply losing all 
+the currency inside
 
-```bash
-ng generate --help
-```
 
-## Building
+## Using the wallet
+If you want to use the wallet, even though it is not secure.
+for bitcoin everything is ready for as long as: https://blockstream.info/ is online
 
-To build the project run:
+If you want to use the ethereum wallet, you need to click on the bottom right corner, on the settings button
+and change the string "PASTE_YOUR_API_KEY_HERE" with an API key from https://www.infura.io/
+You can get a key for free, and even if you frecuently transact with ethereum you will probably not run out of credits for it
 
-```bash
-ng build
-```
+## Testnet.
+you can change to testnet in the settings, this will use a secondary bitcoin address that you can use for testing. Ethereum address will remain the same, since it already requires you to have some ethereum in there already to get "testing ethereum" from a faucet sadly
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Future
+hopefully this can one day be an open source wallet that everyone can have on a usb stick. security, transaction history, better settings, unit and end to end testing, certificates for easier destribution, etc...
